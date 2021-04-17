@@ -1,6 +1,6 @@
 import React from "react";
 
-const template = () => {
+const Template = () => {
   return (
     <>
       <p>Hello World</p>
@@ -8,4 +8,4 @@ const template = () => {
   );
 };
 
-export default template;
+export default Template;

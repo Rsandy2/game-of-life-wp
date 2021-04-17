@@ -4,3 +4,4 @@
 
 export { default as Template } from "./Template";
 export { default as Sidebar } from "./Sidebar/Sidebar";
+export { default as GridSystem } from "./GridSystem";

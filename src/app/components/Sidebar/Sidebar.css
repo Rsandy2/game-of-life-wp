@@ -1,0 +1,47 @@
+.sidebar {
+  height: 100vh;
+  width: 12vw;
+  max-height: 100%;
+
+  /* background-color: #e9f4ff8a; */
+  background-color: #e0e6e9;
+  /* background-color: var(--bg-white); */
+  color: var(--alternate);
+  border-right: 1px solid var(--border-line);
+  position: fixed;
+  display: block;
+
+  top: 0;
+  left: 0;
+
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar {
+  /* background: url("https://images3.alphacoders.com/114/1140657.png");
+   */
+  /* filter: brightness(0.6); */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.sidebar-item {
+  padding: 1rem 1.2rem;
+  display: flex;
+  align-items: center;
+  height: 55px;
+  border-bottom: 1px solid var(--border-line);
+  /* border-color: #454545; */
+}
+
+.sidebar .sidebar-item > a {
+  text-transform: uppercase;
+  font-weight: lighter;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-decoration: none;
+}

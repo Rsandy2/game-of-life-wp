@@ -1,9 +1,11 @@
 import React from "react";
 
-export const Template = () => {
+const template = () => {
   return (
     <>
       <p>Hello World</p>
     </>
   );
 };
+
+export default template;

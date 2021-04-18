@@ -36,7 +36,7 @@
   /* border-color: #454545; */
 }
 
-.sidebar .sidebar-item > a {
+.sidebar .sidebar-item > a, a:visited {
   text-transform: uppercase;
   font-weight: lighter;
 

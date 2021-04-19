@@ -67,3 +67,7 @@ body {
   --font-size-medium-two: 1.25rem;
   --font-size-medium-three: 1.5rem;
 }
+
+.side_nav{
+  display:flex;
+}

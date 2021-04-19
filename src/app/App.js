@@ -7,7 +7,7 @@ export const App = () => {
       <header className="App-header">
         <Sidebar />
         <GridSystem />
-        <Template />
+        {/* <Template /> */}
       </header>
     </div>
   );

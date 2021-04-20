@@ -1,6 +1,6 @@
 .sidebar {
   height: 100vh;
-  width: 12vw;
+  width:auto;
   max-height: 100%;
 
   /* background-color: #e9f4ff8a; */
@@ -36,12 +36,24 @@
   /* border-color: #454545; */
 }
 
-.sidebar .sidebar-item > a, a:visited {
+.sidebar .sidebar-item {
+  color: var(--alternate);
   text-transform: uppercase;
   font-weight: lighter;
-
-  overflow: hidden;
+  overflow:hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   text-decoration: none;
+}
+
+.sidebar-item:hover{
+  transition:background-color 0.2s ease;
+  background-color:#cad2d6;
+}
+
+.sidebar-item:active{
+  transition:background-color 0.1s ease, color 0.1s ease;
+  background-color:#a6b0b4;
+  color: #c23008;
+
 }

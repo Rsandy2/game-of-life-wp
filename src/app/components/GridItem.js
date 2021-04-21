@@ -1,45 +1,23 @@
 import { React, useState, useEffect } from "react";
 
 const GridItem = ({ properties, updateCell }) => {
-  //   const {
-  //     status: [status, setStatus],
-  //   } = {
-  //     status: useState(false),
-  //     ...(properties || {}),
-  //   };
-
-  const [status, setStatus] = useState(false);
-  useEffect(() => {
-    // console.log("Constructor test");
-    // itemState.setStatus(true);
-  }, []);
-
   const styles = {
     Active: {
-      backgroundColor: "orange",
+      backgroundColor: "#ffd7ba",
     },
     Dead: {
-      backgroundColor: "var(--light-red)",
+      backgroundColor: "var(--pink-red)",
     },
   };
 
-  let testFunc = (details) => {
-    console.log(details);
-    // updateCell(status);
-  };
   return (
     <div
       className="cell"
-      style={status ? styles.Active : styles.Dead}
-      onClick={() => testFunc(properties)}
-      onContextMenu={() => updateCell()}
+      style={properties.status ? styles.Active : styles.Dead}
       onClick={() => {
-        setStatus(updateCell(status, properties.x, properties.y));
-        // testFunc(properties);
+        updateCell(properties.status, properties.x, properties.y);
       }}
-    >
-      {properties.status}
-    </div>
+    ></div>
   );
 };
 

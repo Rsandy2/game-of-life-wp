@@ -1,15 +1,16 @@
 import { React, useEffect, useState } from "react";
 import GridItem from "./GridItem";
-import Container from "react-bootstrap/Container";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
+import "./Sidebar.css";
 import "./GridSystem.css";
 
-const GridSystem = () => {
+let GridSystem = () => {
+  let clone = (a) => {
+    return a.map((arr) => [...arr]);
+  };
   const settings = {
     //Settings contain default for GridSystem
-    columns: 5,
-    rows: 5,
+    columns: 15,
+    rows: 15,
     speed: 5,
   };
 
@@ -29,46 +30,106 @@ const GridSystem = () => {
     return initGrid(settings.rows, settings.columns);
   });
 
-  let resetGrid = () => {
-    console.log("Grid Reset");
-  };
-  useEffect(
-    () => {
-      console.log("Constructor test");
-      // console.log(settings);
-      // console.log(initGrid(settings.rows, settings.columns));
-      // setGrid(initGrid(settings.row, settings.columns));
-      console.log(grid);
-    },
-    resetGrid(),
-    []
-  );
-
   let updateCell = (status, x, y) => {
-    // console.log("Click Event");
-    // console.log(status);
-
-    let ref = [...grid]; // Delimiter to pass vals
+    let ref = clone(grid); // Delimiter to pass vals
     ref[x][y] = !status;
     setGrid(ref);
-    // console.log(grid);
+
     return status ? false : true;
   };
 
-  return grid.map((row, x) => {
+  let next = (rows, columns) => {
+    let gridCopy = clone(grid);
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < columns; j++) {
+        let counter = 0;
+        if (i > 0 && j > 0) if (grid[i - 1][j - 1]) counter++;
+        if (i > 0) if (grid[i - 1][j]) counter++;
+        if (i > 0 && j < columns - 1) if (grid[i - 1][j + 1]) counter++;
+
+        if (j > 0) if (grid[i][j - 1]) counter++;
+        if (j < columns - 1) if (grid[i][j + 1]) counter++;
+
+        if (i < rows - 1 && j > 0) if (grid[i + 1][j - 1]) counter++;
+        if (i < rows - 1) if (grid[i + 1][j]) counter++;
+        if (i < rows - 1 && j < columns - 1) if (grid[i + 1][j + 1]) counter++;
+
+        if (grid[i][j] && (counter < 2 || counter > 3)) gridCopy[i][j] = false;
+        if (!grid[i][j] && counter === 3) gridCopy[i][j] = true;
+      }
+    }
+    setGrid(gridCopy);
+  };
+
+  let start = () => {
+    setInterval(function () {
+      next(settings.rows, settings.columns);
+    }, 500);
+  };
+
+  const Sidebar = () => {
     return (
-      <div className="cellContainer">
-        {row.map((status, y) => {
-          return (
-            <GridItem
-              properties={(status, { x: x, y: y, status: status })}
-              updateCell={updateCell}
-            />
-          );
-        })}
+      <div className="sidebar">
+        <div className="sidebar-item">
+          <a href="#">Game of Life</a>
+        </div>
+        <div className="sidebar-item">
+          <a
+            href="#"
+            onClick={() => {
+              start();
+            }}
+          >
+            Start
+          </a>
+        </div>
+        <div className="sidebar-item">
+          <a href="#">Stop</a>
+        </div>
+        <div className="sidebar-item">
+          <a
+            href="#"
+            onClick={() => {
+              next(settings.rows, settings.columns);
+            }}
+          >
+            Next
+          </a>
+        </div>
       </div>
     );
-  });
+  };
+
+  const Display = () => {
+    return grid.map((row, x) => {
+      return (
+        <div className="cellContainer">
+          {row.map((status, y) => {
+            return (
+              <GridItem
+                properties={(status, { x: x, y: y, status: status })}
+                updateCell={updateCell}
+              />
+            );
+          })}
+        </div>
+      );
+    });
+  };
+
+  return (
+    <>
+      <Sidebar />
+      <button
+        onClick={() => {
+          next(settings.rows, settings.columns);
+        }}
+      >
+        Test
+      </button>
+      <Display />
+    </>
+  );
 };
 
 export default GridSystem;

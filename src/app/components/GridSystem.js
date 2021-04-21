@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useCallback, useState } from "react";
 import GridItem from "./GridItem";
 import "./Sidebar.css";
 import "./GridSystem.css";
@@ -11,7 +11,7 @@ let GridSystem = () => {
     //Settings contain default for GridSystem
     columns: 15,
     rows: 15,
-    speed: 5,
+    speed: 50,
   };
 
   let initGrid = (rows, cols) => {
@@ -40,9 +40,11 @@ let GridSystem = () => {
 
   let next = (rows, columns) => {
     let gridCopy = clone(grid);
+
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < columns; j++) {
         let counter = 0;
+
         if (i > 0 && j > 0) if (grid[i - 1][j - 1]) counter++;
         if (i > 0) if (grid[i - 1][j]) counter++;
         if (i > 0 && j < columns - 1) if (grid[i - 1][j + 1]) counter++;
@@ -56,16 +58,18 @@ let GridSystem = () => {
 
         if (grid[i][j] && (counter < 2 || counter > 3)) gridCopy[i][j] = false;
         if (!grid[i][j] && counter === 3) gridCopy[i][j] = true;
+
+        // console.table(i, j, counter); //Neighbors Checking
       }
     }
     setGrid(gridCopy);
   };
 
-  let start = () => {
-    setInterval(function () {
-      next(settings.rows, settings.columns);
-    }, 500);
-  };
+  // let start = () => {
+  //   setInterval(() => {
+  //     next(settings.rows, settings.columns);
+  //   }, settings.speed * 10);
+  // };
 
   const Sidebar = () => {
     return (
@@ -77,7 +81,9 @@ let GridSystem = () => {
           <a
             href="#"
             onClick={() => {
-              start();
+              setInterval(() => {
+                next(settings.rows, settings.columns);
+              }, settings.speed * 10);
             }}
           >
             Start
@@ -107,7 +113,7 @@ let GridSystem = () => {
           {row.map((status, y) => {
             return (
               <GridItem
-                properties={(status, { x: x, y: y, status: status })}
+                properties={{ x: x, y: y, status: status }}
                 updateCell={updateCell}
               />
             );
@@ -120,13 +126,6 @@ let GridSystem = () => {
   return (
     <>
       <Sidebar />
-      <button
-        onClick={() => {
-          next(settings.rows, settings.columns);
-        }}
-      >
-        Test
-      </button>
       <Display />
     </>
   );
